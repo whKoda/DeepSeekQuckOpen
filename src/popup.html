@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeepSeek Quick Open</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="popup">
+      <header>
+        <img class="mark" src="../assets/icons/deepseek.svg" alt="" aria-hidden="true">
+        <div>
+          <h1>DeepSeek</h1>
+          <p>官网侧边栏</p>
+        </div>
+      </header>
+
+      <button id="openSidePanel" class="primary action-button" type="button">
+        <span>打开侧边栏</span>
+        <kbd data-command="open-deepseek-side-panel">...</kbd>
+      </button>
+      <button id="openWindow" class="action-button" type="button">
+        <span>独立窗口打开</span>
+        <kbd data-command="open-deepseek-window">...</kbd>
+      </button>
+      <button id="openTab" class="action-button" type="button">
+        <span>在标签中打开</span>
+        <kbd data-command="open-deepseek-tab">...</kbd>
+      </button>
+      <button id="openShortcuts" class="settings-button" type="button">配置快捷键</button>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
