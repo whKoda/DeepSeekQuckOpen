@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.commands.onCommand.addListener((command) => {
   if (command === "open-deepseek-side-panel") {
-    runCommand(openSidePanel);
+    runCommand(openSidePanel, { fallbackToTab: false });
   }
 
   if (command === "open-deepseek-window") {
@@ -52,7 +52,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function openSidePanel(windowId) {
   if (typeof chrome.sidePanel?.open !== "function") {
-    return openDeepSeekTab();
+    throw new Error("Side panel API is not available.");
   }
 
   if (windowId) {
@@ -61,11 +61,17 @@ async function openSidePanel(windowId) {
   }
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab?.windowId) {
-    return openDeepSeekTab();
+  if (tab?.windowId) {
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+    return { ok: true };
   }
 
-  await chrome.sidePanel.open({ windowId: tab.windowId });
+  const focusedWindow = await chrome.windows.getLastFocused({ windowTypes: ["normal"] });
+  if (!focusedWindow?.id) {
+    throw new Error("No focused browser window found.");
+  }
+
+  await chrome.sidePanel.open({ windowId: focusedWindow.id });
   return { ok: true };
 }
 
@@ -106,6 +112,10 @@ async function getDisplaySize() {
   return { width: 1440, height: 900 };
 }
 
-function runCommand(action) {
-  action().catch(() => openDeepSeekTab());
+function runCommand(action, options = { fallbackToTab: true }) {
+  action().catch(() => {
+    if (options.fallbackToTab) {
+      openDeepSeekTab();
+    }
+  });
 }
