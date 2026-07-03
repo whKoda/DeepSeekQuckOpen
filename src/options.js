@@ -21,6 +21,16 @@ document.getElementById("openShortcuts").addEventListener("click", () => {
 });
 
 loadShortcuts();
+loadActionBehavior();
+
+document.getElementById("actionBehavior").addEventListener("change", async (event) => {
+  if (event.target.name !== "actionBehavior") return;
+  const response = await chrome.runtime.sendMessage({
+    type: "SET_ACTION_CLICK_BEHAVIOR",
+    behavior: event.target.value
+  });
+  renderBehaviorStatus(response?.ok ? "已保存工具栏图标左键行为。" : "保存失败，请重试。");
+});
 
 async function openSidePanel() {
   if (typeof chrome.sidePanel?.open === "function") {
@@ -55,6 +65,17 @@ async function loadShortcuts() {
     row.append(label, shortcut);
     list.append(row);
   }
+}
+
+async function loadActionBehavior() {
+  const response = await chrome.runtime.sendMessage({ type: "GET_ACTION_CLICK_BEHAVIOR" });
+  const behavior = response?.behavior || "menu";
+  const input = document.querySelector(`input[name="actionBehavior"][value="${behavior}"]`);
+  if (input) input.checked = true;
+}
+
+function renderBehaviorStatus(message) {
+  document.getElementById("behaviorStatus").textContent = message;
 }
 
 function normalizeShortcut(shortcut) {

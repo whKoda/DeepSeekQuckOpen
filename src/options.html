@@ -26,6 +26,41 @@
       </section>
 
       <section class="panel">
+        <h2>工具栏图标左键</h2>
+        <div id="actionBehavior" class="radio-list">
+          <label class="radio-row">
+            <input type="radio" name="actionBehavior" value="menu">
+            <span>
+              <strong>显示操作菜单</strong>
+              <small>左键点击图标时显示当前弹窗菜单。</small>
+            </span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="actionBehavior" value="side-panel">
+            <span>
+              <strong>打开侧边栏</strong>
+              <small>左键点击图标时直接打开 DeepSeek 侧边栏。</small>
+            </span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="actionBehavior" value="window">
+            <span>
+              <strong>独立窗口打开</strong>
+              <small>左键点击图标时直接用独立窗口打开 DeepSeek。</small>
+            </span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="actionBehavior" value="tab">
+            <span>
+              <strong>在标签中打开</strong>
+              <small>左键点击图标时直接打开 DeepSeek 标签页。</small>
+            </span>
+          </label>
+        </div>
+        <p id="behaviorStatus" class="note" aria-live="polite"></p>
+      </section>
+
+      <section class="panel">
         <div class="panel-heading">
           <h2>快捷键</h2>
           <button id="openShortcuts" class="link-button" type="button">配置快捷键</button>
