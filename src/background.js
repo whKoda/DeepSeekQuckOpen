@@ -4,9 +4,9 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false });
 });
 
-chrome.commands.onCommand.addListener((command) => {
+chrome.commands.onCommand.addListener((command, tab) => {
   if (command === "open-deepseek-side-panel") {
-    runCommand(openSidePanel, { fallbackToTab: false });
+    openSidePanelFromCommand(tab);
   }
 
   if (command === "open-deepseek-window") {
@@ -17,6 +17,16 @@ chrome.commands.onCommand.addListener((command) => {
     runCommand(openDeepSeekTab);
   }
 });
+
+function openSidePanelFromCommand(tab) {
+  if (typeof chrome.sidePanel?.open !== "function" || !tab?.windowId) {
+    return;
+  }
+
+  chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {
+    // Do not fall back to a tab or window for the side-panel shortcut.
+  });
+}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type === "OPEN_SIDE_PANEL") {

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "DeepSeek Quick Open",
   "description": "Open the official DeepSeek website in a clean browser side panel, standalone window, or tab.",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "permissions": [
     "sidePanel",
     "tabs",
