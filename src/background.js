@@ -2,6 +2,11 @@ const DEEPSEEK_URL = "https://chat.deepseek.com/";
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false });
+  createActionContextMenu();
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  createActionContextMenu();
 });
 
 chrome.commands.onCommand.addListener((command, tab) => {
@@ -17,6 +22,22 @@ chrome.commands.onCommand.addListener((command, tab) => {
     runCommand(openDeepSeekTab);
   }
 });
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "open-deepseek-side-panel") {
+    openSidePanelFromCommand(tab);
+  }
+});
+
+function createActionContextMenu() {
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: "open-deepseek-side-panel",
+      title: "打开 DeepSeek 侧边栏",
+      contexts: ["action"]
+    });
+  });
+}
 
 function openSidePanelFromCommand(tab) {
   if (typeof chrome.sidePanel?.open !== "function" || !tab?.windowId) {
@@ -53,6 +74,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message?.type === "OPEN_SHORTCUTS_PAGE") {
     openShortcutsPage().then(sendResponse).catch((error) => {
       sendResponse({ ok: false, error: error.message });
+    });
+    return true;
+  }
+
+  if (message?.type === "OPEN_OPTIONS_PAGE") {
+    chrome.runtime.openOptionsPage(() => {
+      if (chrome.runtime.lastError) {
+        sendResponse({ ok: false, error: chrome.runtime.lastError.message });
+      } else {
+        sendResponse({ ok: true });
+      }
     });
     return true;
   }

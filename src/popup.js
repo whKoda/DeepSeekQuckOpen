@@ -20,6 +20,11 @@ document.getElementById("openShortcuts").addEventListener("click", async () => {
   window.close();
 });
 
+document.getElementById("openOptions").addEventListener("click", async () => {
+  await send("OPEN_OPTIONS_PAGE");
+  window.close();
+});
+
 function send(type) {
   return chrome.runtime.sendMessage({ type });
 }

@@ -2,11 +2,12 @@
   "manifest_version": 3,
   "name": "DeepSeek Quick Open",
   "description": "Open the official DeepSeek website in a clean browser side panel, standalone window, or tab.",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "permissions": [
     "sidePanel",
     "tabs",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "contextMenus"
   ],
   "host_permissions": [
     "https://chat.deepseek.com/*",
@@ -31,6 +32,10 @@
       "48": "assets/icons/icon48.png",
       "128": "assets/icons/icon128.png"
     }
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
   },
   "commands": {
     "open-deepseek-side-panel": {

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeepSeek Quick Open 选项</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <img class="logo" src="../assets/icons/deepseek.svg" alt="" aria-hidden="true">
+        <div>
+          <h1>DeepSeek Quick Open</h1>
+          <p>管理打开方式和快捷键。</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2>打开方式</h2>
+        <div class="actions">
+          <button id="openSidePanel" type="button">打开侧边栏</button>
+          <button id="openWindow" type="button">独立窗口打开</button>
+          <button id="openTab" type="button">在标签中打开</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>快捷键</h2>
+          <button id="openShortcuts" class="link-button" type="button">配置快捷键</button>
+        </div>
+        <div id="shortcuts" class="shortcut-list"></div>
+        <p class="note">快捷键必须在浏览器的扩展快捷键页面中修改，扩展不能直接替用户写入快捷键。</p>
+      </section>
+
+      <section class="panel">
+        <h2>右键菜单</h2>
+        <p class="note">右键点击工具栏图标时，浏览器会显示固定菜单；本扩展已在其中添加“打开 DeepSeek 侧边栏”。</p>
+      </section>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>
